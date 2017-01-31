@@ -54,10 +54,6 @@ describe('synapse', () => {
     unsubscribe.mockClear();
   });
 
-  it('errors if no mapStateToProps specified', () => {
-    expect(() => synapse(null)(dummyComponent)).toThrow();
-  });
-
   it('returns a synapse\'d component with correct display name', () => {
     const syn = synapse(mapStateToProps)(dummyComponent);
     expect(syn.displayName).toBe('Synapse_dummyComponent');
@@ -77,14 +73,14 @@ describe('synapse', () => {
     describe('valid pathArray', () => {
       beforeEach(() => {
         const syn = synapse(mapStateToProps, null, ['time'])(dummyComponent);
-        wrapper = mount(
+        wrapper = renderComponent(
           <Provider store={store}>
             <syn />
           </Provider>);
       });
 
-      // TODO: Tests failing due to mock error.
-      // fit('calls attach if pathArray provided', () => {
+      // TODO: Tests failing - Need to use TestUtils?.
+      // it('calls attach if pathArray provided', () => {
       //   expect(attach).toBeCalled();
       // });
 
@@ -110,6 +106,16 @@ describe('synapse', () => {
       it('calls unsubscribe if no pathArray provided and unmount', () => {
         wrapper.unmount();
         expect(unsubscribe).toBeCalled();
+      });
+    });
+
+    describe('willReceiveProps', () => {
+      it('calls shallowEqual on propChange', () => {
+        // TODO
+      });
+
+      it('calls provided mapStateToProps via hook func on propChange if different', () => {
+        // TODO
       });
     });
   });

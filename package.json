@@ -1,14 +1,25 @@
 {
   "name": "redux-synapse",
-  "version": "0.1.0-beta1",
+  "version": "0.2.0",
   "main": "lib/index.js",
   "files": [
     "src",
     "lib"
   ],
+  "keywords": [
+    "redux",
+    "react redux alternative",
+    "react redux bindings",
+    "synapse",
+    "redux synapse",
+    "redux performance"
+  ],
   "description": "Layer above Redux to help connect React components to the store so they are directly alerted of contextual updates fast. Alternative to react-redux",
   "scripts": {
+    "start": "webpack-dev-server --content-base ./examples --env development",
     "build": "rimraf lib && babel src --out-dir lib --copy-files --ignore tests",
+    "build:demo": "webpack ./examples --config ./examples/webpack.config.js",
+    "watch:demo": "webpack ./examples --watch --config ./examples/webpack.config.js",
     "lint": "eslint ./src",
     "test": "jest",
     "test:tc": "jest --runInBand"
@@ -41,7 +52,8 @@
     "redux": "3.6.0",
     "immutable": "3.8.1",
     "sinon":"1.17.3",
-    "webpack": "^1.10.5"
+    "webpack": "~1.14.0",
+    "webpack-dev-server": "~1.16.2"
   },
   "dependencies": {
     "shallowequal": "0.2.2"

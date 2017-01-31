@@ -10,13 +10,14 @@ function getComponentName(component) {
 
 export default (mapStateToProps, mapDispatchToProps, pathArray) => {
   return (component) => {
-    if (!mapStateToProps) {
-      throw Error('mapStateToProps must be specified', component);
+    let msp = mapStateToProps;
+    if (!msp) {
+      msp = () => { return {}; };
     }
     let props = {};
     function hook(hookProps = this.props) {
       const { getState, dispatch } = this.context.store;
-      const stateProps = mapStateToProps(getState(), hookProps);
+      const stateProps = msp(getState(), hookProps);
       let dispatchProps = {};
       if (mapDispatchToProps) {
         dispatchProps = mapDispatchToProps(dispatch,  hookProps);
@@ -48,11 +49,13 @@ export default (mapStateToProps, mapDispatchToProps, pathArray) => {
         }else {
           this.unsubscribe = this.context.store.subscribe(this.hook);
         }
+        this.hook();
       }
 
       componentWillReceiveProps(nextProps) {
-        // TODO: Shallow Equal
-        this.hook(nextProps);
+        if (!shallowequal(nextProps, this.props)) {
+          this.hook(nextProps);
+        }
       }
 
       shouldComponentUpdate() {
@@ -80,6 +83,7 @@ export default (mapStateToProps, mapDispatchToProps, pathArray) => {
     Synapse.contextTypes = {
       store: PropTypes.object.isRequired,
     };
+
     return Synapse;
   };
 };

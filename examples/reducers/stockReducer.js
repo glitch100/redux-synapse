@@ -28,7 +28,6 @@ export default (state = defaultState, action) => {
     result = Object.assign({
       [action.name]: {
         value: action.value,
-        change: 0,
         history: [],
       },
       ...state,

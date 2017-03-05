@@ -1,7 +1,7 @@
 # `redux-synapse`
 <img src="http://i.imgur.com/hAuOOkL.png" />
 
-`redux-synapse` is a library that is heavily inspired by `react-redux` and acts as an alternative for the binding of react components to the store in a more explicit manner. The primary difference is the nature in which each component must declare explicity what updates should affect the component via its higher order component; a `synapse`.
+`redux-synapse` is a library that is heavily inspired by `react-redux` and acts as an alternative for the binding of react components to the store in a more explicit manner. The primary difference is the nature in which each component must declare explicity what updates should affect the component via its higher order component; a `synapse`. With `synapse`'s it is possible to achieve a higher level of performance, than you would with alternative libraries.
 
 A `synapse` is declared to listen to specific messages and act upon them. This is an early release of something that I intend to grow over time and build upon to make more efficient.
 

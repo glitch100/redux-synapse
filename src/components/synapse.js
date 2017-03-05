@@ -42,11 +42,13 @@ export default (mapStateToProps, mapDispatchToProps, pathArray) => {
       }
 
       componentDidMount() {
+        var x = component;
         this.hook = hook.bind(this);
         if (Array.isArray(pathArray) && pathArray.length > 0) {
           this.synapsed = true;
           attach(pathArray, this.hook);
         }else {
+          this.synapsed = false;
           this.unsubscribe = this.context.store.subscribe(this.hook);
         }
         this.hook();

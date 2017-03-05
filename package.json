@@ -1,6 +1,6 @@
 {
   "name": "redux-synapse",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "lib/index.js",
   "files": [
     "src",
@@ -14,7 +14,7 @@
     "redux synapse",
     "redux performance"
   ],
-  "description": "Layer above Redux to help connect React components to the store so they are directly alerted of contextual updates fast. Alternative to react-redux",
+  "description": "Layer above Redux to help explicitly bind React components to the store. Great for performance and frequenetly updating apps. Alternative to react-redux",
   "scripts": {
     "start": "webpack-dev-server --content-base ./examples --env development",
     "build": "rimraf lib && babel src --out-dir lib --copy-files --ignore tests",

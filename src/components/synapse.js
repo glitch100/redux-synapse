@@ -1,6 +1,7 @@
 import { Component, PropTypes, createElement } from 'react';
 import { attach, detach } from '../observer';
 import shallowequal from 'shallowequal';
+import hoistStatics from 'hoist-non-react-statics';
 
 function getComponentName(component) {
   let name = 'Synapse_';
@@ -14,7 +15,7 @@ export default (mapStateToProps, mapDispatchToProps, pathArray) => {
     if (!msp) {
       msp = () => { return {}; };
     }
-    let props = {};
+    let synapseProps = {};
     function hook(hookProps = this.props) {
       const { getState, dispatch } = this.context.store;
       const stateProps = msp(getState(), hookProps);
@@ -22,7 +23,7 @@ export default (mapStateToProps, mapDispatchToProps, pathArray) => {
       if (mapDispatchToProps) {
         dispatchProps = mapDispatchToProps(dispatch,  hookProps);
       }
-      props = {
+      synapseProps = {
         ...stateProps,
         ...dispatchProps,
       };
@@ -33,9 +34,10 @@ export default (mapStateToProps, mapDispatchToProps, pathArray) => {
     }
 
     class Synapse extends Component {
-      constructor() {
-        super();
-        this.oldProps = {};
+      constructor(props, context) {
+        super(props, context);
+        this.oldProps = msp(context.store.getState(), props);
+        synapseProps = this.oldProps;
         this.state = {
           version: 0,
         };
@@ -47,6 +49,7 @@ export default (mapStateToProps, mapDispatchToProps, pathArray) => {
           this.synapsed = true;
           attach(pathArray, this.hook);
         }else {
+          this.synapsed = false;
           this.unsubscribe = this.context.store.subscribe(this.hook);
         }
         this.hook();
@@ -59,8 +62,8 @@ export default (mapStateToProps, mapDispatchToProps, pathArray) => {
       }
 
       shouldComponentUpdate() {
-        if (!shallowequal(props, this.oldProps)) {
-          this.oldProps = props;
+        if (!shallowequal(synapseProps, this.oldProps)) {
+          this.oldProps = synapseProps;
           return true;
         }
         return false;
@@ -75,7 +78,7 @@ export default (mapStateToProps, mapDispatchToProps, pathArray) => {
       }
 
       render() {
-        const finalComponent = createElement(component, props);
+        const finalComponent = createElement(component, synapseProps);
         return finalComponent;
       }
     }
@@ -84,6 +87,6 @@ export default (mapStateToProps, mapDispatchToProps, pathArray) => {
       store: PropTypes.object.isRequired,
     };
 
-    return Synapse;
+    return hoistStatics(Synapse, component);
   };
 };

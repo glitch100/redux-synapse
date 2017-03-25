@@ -1,4 +1,5 @@
 const DEFAULT_DELIMITER = '-';
+let _reverseNotificationMode = true;
 let _observerDictionary = {};
 let _attachQueue = [];
 let _prepareQueue = [];
@@ -14,6 +15,18 @@ const hitSubscriber = (s) => {
 function notify(keys) {
   hitSubs = [];
   for (let i = 0; i < keys.length; i++) {
+    // TODO: Experimental functionality
+    if (!_reverseNotificationMode) {
+      const entry = _observerDictionary[keys[i]];
+      if (entry) {
+        _observerDictionary[keys[i]].subscribers.forEach(hitSubscriber);
+      }else {
+        // TODO: Surround in process check
+        console.warn('Attempted to update on a non-existent key: ', keys[i],
+        '\nDictionary Entries: ', Object.keys(_observerDictionary));
+      }
+      continue;
+    }
     const split = keys[i].split(DEFAULT_DELIMITER);
     let tempKey = null;
     for (let j = 0; j < split.length; j++) {
@@ -128,6 +141,9 @@ function releaseNotifications() {
   }
 }
 
+function setReverseNotficationTraversal(value = true) {
+  _reverseNotificationMode = value;
+}
 
 export default {
   attach,
@@ -144,4 +160,5 @@ export default {
   get prepareQueue() {
     return _prepareQueue;
   },
+  setReverseNotficationTraversal,
 };

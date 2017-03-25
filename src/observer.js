@@ -15,7 +15,7 @@ const hitSubscriber = (s) => {
 function notify(keys) {
   hitSubs = [];
   for (let i = 0; i < keys.length; i++) {
-    //TODO: Experimental functionality
+    // TODO: Experimental functionality
     if (!_reverseNotificationMode) {
       const entry = _observerDictionary[keys[i]];
       if (entry) {
@@ -160,4 +160,5 @@ export default {
   get prepareQueue() {
     return _prepareQueue;
   },
+  setReverseNotficationTraversal,
 };

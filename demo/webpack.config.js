@@ -29,7 +29,7 @@ const config = {
     ],
   },
   output: {
-    path: __dirname + '/stock/dist',
+    path: __dirname + '/dist',
     filename: '[name].bundle.js',
   },
   resolve: {

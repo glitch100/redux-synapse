@@ -1,6 +1,6 @@
 {
   "name": "redux-synapse",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "main": "lib/index.js",
   "files": [
     "src",
@@ -22,7 +22,7 @@
     "watch:demo": "webpack --watch ./demo --config ./demo/webpack.config.js",
     "lint": "eslint ./src",
     "test": "jest",
-    "test:tc": "jest --runInBand",
+    "test:tc": "jest --runInBand"
   },
   "author": "Jon Evans (glitch100@gmail.com)",
   "license": "MIT",

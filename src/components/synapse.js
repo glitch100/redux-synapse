@@ -36,7 +36,10 @@ export default (mapStateToProps, mapDispatchToProps, pathArray) => {
     class Synapse extends Component {
       constructor(props, context) {
         super(props, context);
-        this.oldProps = msp(context.store.getState(), props);
+        this.oldProps = {
+          ...msp(context.store.getState(), props),
+          ...mapDispatchToProps ? mapDispatchToProps(context.store.dispatch) : {},
+        };
         synapseProps = this.oldProps;
         this.state = {
           version: 0,

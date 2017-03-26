@@ -1,6 +1,9 @@
-import { Record } from 'immutable';
+import { Map, Record } from 'immutable';
 
 export default Record({
-  name: 'NONE_SET',
   accountValue: 0,
+  details: Map({
+    name: 'NONE_SET',
+    age: 0,
+  }),
 });

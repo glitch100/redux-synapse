@@ -27,6 +27,7 @@ export default class TraderCTA extends React.Component {
   render() {
     return (
       <div>
+        <h3>Trader Name: {this.props.name}</h3>
         <input type="text" onChange={this.handleChange} value={this.state.name} />
         <button onClick={this.handleClick}>Set Name</button>
       </div>

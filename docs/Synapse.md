@@ -13,3 +13,33 @@ The `synapse` is the higher order component used for wrapping the components pro
 
 ## Behind the scenes
 The `Provider` is responsible for building the internal observer dictionary that is used to determine subscribers across state keys, and paths, from the store state tree.
+
+## Example
+When setting up the component via `synapse`, you pass in the standard, `mapState*` functions, as well as an array of keys, that this component should update itself on.
+
+```js
+
+import { synapse } from 'redux-synapse';
+
+//...Component Declaration
+
+const mapStateToProps = (state) => {
+  return {
+    time: state.time,
+  };
+}
+
+const mapDispatchToProps = (state, dispatch) => {
+  return {
+    setTime: (time) => {
+      dispatch({
+        type: SET_TIME,
+        time,
+      });
+    },
+  };
+};
+
+// We are subscribing to changes in the `video.options` key of the redux state.
+export default synapse(mapStateToProps, mapDispatchToProps, ['video-options'])(StandardComponent);
+```

@@ -5,10 +5,28 @@ import { List } from 'immutable';
 const defaultState = new StocksRecord({
   allStocks: List([
     new StockRecord({
-      name: 'FTSE',
+      name: 'FTSE 100',
       currentValue: 1000,
       previousValue: 750,
       valueDifference: 250,
+      bidHistory: List([
+        0,
+      ]),
+    }),
+    new StockRecord({
+      name: 'FTSE 250',
+      currentValue: 5000,
+      previousValue: 2500,
+      valueDifference: 2500,
+      bidHistory: List([
+        0,
+      ]),
+    }),
+    new StockRecord({
+      name: 'FTSE 350',
+      currentValue: 120,
+      previousValue: 200,
+      valueDifference: -80,
       bidHistory: List([
         0,
       ]),

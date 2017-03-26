@@ -1,7 +1,7 @@
 export const mapStateToProps = (state) => {
   return {
-    name: state.trader.name,
-    accountValue: state.trader.accountValue,
+    name: state.trader.getIn(['details', 'name']),
+    accountValue: state.trader.get('accountValue'),
   };
 };
 

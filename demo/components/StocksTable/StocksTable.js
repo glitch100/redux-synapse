@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import StockItem from '../StockItem';
 
 export default class StocksTable extends React.Component {
   static propTypes = {
@@ -13,7 +14,12 @@ export default class StocksTable extends React.Component {
   renderStocks = () => {
     return this.props.stocks.map((p, i) => {
       return (
-        <p key={i}>{p.name}</p>
+        <StockItem
+          key={i}
+          name={p.name}
+          currentValue={p.currentValue}
+          previousValue={p.previousValue}
+        />
       );
     });
   }

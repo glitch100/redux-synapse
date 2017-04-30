@@ -1,10 +1,17 @@
 import React, { Component, PropTypes } from 'react';
-import { createObserverDictionary, releaseNotifications } from '../observer';
+import {
+  createObserverDictionary,
+  releaseNotifications,
+  setDelimiter,
+  setReverseNotficationTraversal,
+} from '../observer';
 
 export default class Provider extends Component {
   static propTypes = {
     store: PropTypes.object.isRequired,
     children: PropTypes.node.isRequired,
+    delimiter: PropTypes.string,
+    reverseTraversal: PropTypes.bool,
   };
 
   static childContextTypes = {
@@ -23,6 +30,10 @@ export default class Provider extends Component {
   }
 
   componentDidMount() {
+    if (this.props.delimiter) {
+      setDelimiter(this.props.delimiter);
+    }
+    setReverseNotficationTraversal(this.props.reverseTraversal);
     createObserverDictionary(this.store.getState());
     this.unsubscribe = this.store.subscribe(() => {
       releaseNotifications();
@@ -32,6 +43,10 @@ export default class Provider extends Component {
   componentWillUnmount() {
     this.unsubscribe();
   }
+
+  static defaultPropTypes = {
+    reverseTraversal: true,
+  };
 
   render() {
     return (

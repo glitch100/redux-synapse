@@ -1,16 +1,16 @@
 import TraderRecord from '../records/TraderRecord';
-import { prepareNotification } from 'redux-synapse';
+import { generateSynapseRecord } from 'redux-synapse';
 
-const trader = (state = new TraderRecord(), action) => {
+const STATE_KEY = 'trader';
+const defaultState = generateSynapseRecord(new TraderRecord(), STATE_KEY);
+const trader = (state = defaultState, action) => {
   let newState;
   switch (action.type) {
   case 'SET_TRADER_VALUE':
     newState = state.set('accountValue', action.accountValue);
-    prepareNotification(['trader']);
     return newState;
   case 'SET_TRADER_NAME':
-    newState = state.set('name', action.name);
-    prepareNotification(['trader']);
+    newState = state.setIn(['details', 'name'], action.name);
     return newState;
   default:
     return state;

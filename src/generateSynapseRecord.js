@@ -70,7 +70,7 @@ export default function generateSynapseRecord(defaultState: any, stateKey: Strin
         Key: ${keys[0]}`);
       }
       let objKeys = [...keys];
-      objKeys = objKeys.splice(-1, 1);
+      objKeys.splice(0, 1);
       desiredObject = desiredObject.setIn(objKeys, value);
       const newSet = super.set(keys[0], desiredObject);
       prepareNotification([`${this.__stateKey__}${getDelimiter()}${keys.join(getDelimiter())}`]);

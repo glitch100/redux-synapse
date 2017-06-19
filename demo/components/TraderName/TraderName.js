@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-export default class TraderCTA extends React.Component {
+export default class TraderName extends React.Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     setName: PropTypes.func.isRequired,

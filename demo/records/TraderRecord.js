@@ -5,5 +5,8 @@ export default Record({
   details: Map({
     name: 'NONE_SET',
     age: 0,
+    address: Map({
+      street: 'none',
+    }),
   }),
 });

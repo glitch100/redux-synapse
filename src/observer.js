@@ -5,7 +5,7 @@ let _attachQueue = [];
 let _prepareQueue = [];
 let hitSubs = [];
 const indexableKey = new RegExp(/{(.*?)}/);
-
+window.__SYNAPSE__ = {};
 const hitSubscriber = (s) => {
   if (hitSubs.indexOf(s) === -1) {
     hitSubs.push(s);
@@ -141,13 +141,13 @@ function recurseObserverDictionary(state, prefix = null) {
 function createObserverDictionary(state) {
   _observerDictionary = {};
   recurseObserverDictionary(state);
-  console.log(_observerDictionary);
   for (let j = 0; j < _attachQueue.length; j++) {
     const item = _attachQueue[j];
     attach(item.keys, item.observer);
     item.observer();
   }
   _attachQueue = [];
+  window.__SYNAPSE__.dictionary = _observerDictionary;
 }
 
 function prepareNotification(keys) {
@@ -199,6 +199,16 @@ function getDelimiter() {
   return DEFAULT_DELIMITER;
 }
 
+/**
+ * Used exclusively for testing
+ *
+ */
+function resetObserver() {
+  _observerDictionary = {};
+  _prepareQueue = [];
+  _attachQueue = [];
+}
+
 export default {
   attach,
   createObserverDictionary,
@@ -216,5 +226,6 @@ export default {
   get prepareQueue() {
     return _prepareQueue;
   },
+  resetObserver,
   setReverseNotficationTraversal,
 };

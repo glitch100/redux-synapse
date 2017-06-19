@@ -1,5 +1,6 @@
 import React from 'react';
-import TraderCTA from './TraderCTA';
+import TraderName from './TraderName';
+import TraderAddress from './TraderAddress';
 import StocksTable from './StocksTable';
 import './style.scss';
 
@@ -7,7 +8,8 @@ export default function StockApp() {
   return (
     <div>
       <p>Synape Demo Page for Stock Application (In Progress)</p>
-      <TraderCTA />
+      <TraderName />
+      <TraderAddress />
       <StocksTable />
     </div>
   );

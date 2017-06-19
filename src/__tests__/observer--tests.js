@@ -17,19 +17,20 @@ recursedDictionary.dummy = {
 recursedDictionary['dummy-testArray'] = {
   subscribers: [],
 };
-recursedDictionary['dummy-testArray-testBool'] = {
+recursedDictionary['dummy-testBool'] = {
   subscribers: [],
 };
-recursedDictionary['dummy-testArray-testDeeper'] = {
+recursedDictionary['dummy-testDeeper'] = {
   subscribers: [],
 };
-recursedDictionary['dummy-testArray-testDeeper-testLevel'] = {
+recursedDictionary['dummy-testDeeper-testLevel'] = {
   subscribers: [],
 };
 
 describe('Observer Tests', () => {
   beforeEach(() => {
     observer = require.requireActual('../observer');
+    observer.resetObserver();
   });
 
   it('initializes with an empty attach queue', () => {
@@ -60,6 +61,7 @@ describe('Observer Tests', () => {
       const cb = jest.fn();
       observer.attach(['dummy'], cb);
       observer.createObserverDictionary(state);
+
       expect(observer.observerDictionary.dummy.subscribers[0]).toBe(cb);
     });
 
@@ -75,9 +77,14 @@ describe('Observer Tests', () => {
   });
 
   describe('attach', () => {
+    beforeEach(() => {
+      observer.resetObserver();
+    });
+
     it('adds an entry to the attachQueue if dictionary not built', () => {
       const cb = jest.fn();
       observer.attach(['dummy'], cb);
+
       expect(observer.attachQueue.length).toBe(1);
       expect(observer.attachQueue[0].observer).toBe(cb);
     });
@@ -86,6 +93,7 @@ describe('Observer Tests', () => {
       observer.createObserverDictionary(state);
       const cb = jest.fn();
       observer.attach(['dummy'], cb);
+
       expect(observer.observerDictionary.dummy.subscribers.length).toBe(1);
       expect(observer.observerDictionary.dummy.subscribers[0]).toBe(cb);
     });
@@ -93,10 +101,11 @@ describe('Observer Tests', () => {
     it('pushes to the all relevant subscriber queues if dictionary built', () => {
       observer.createObserverDictionary(state);
       const cb = jest.fn();
-      observer.attach(['dummy-testArray-testDeeper'], cb);
+      observer.attach(['dummy-testDeeper-testLevel'], cb);
+
       expect(observer.observerDictionary.dummy.subscribers[0]).toBe(cb);
-      expect(observer.observerDictionary['dummy-testArray'].subscribers[0]).toBe(cb);
-      expect(observer.observerDictionary['dummy-testArray-testDeeper'].subscribers[0]).toBe(cb);
+      expect(observer.observerDictionary['dummy-testDeeper'].subscribers[0]).toBe(cb);
+      expect(observer.observerDictionary['dummy-testDeeper-testLevel'].subscribers[0]).toBe(cb);
     });
   });
 
@@ -119,13 +128,14 @@ describe('Observer Tests', () => {
     });
 
     it('removes all relevant subscribers from queue if dictionary built', () => {
-      const deepKey = 'dummy-testArray-testDeeper';
+      const deepKey = 'dummy-testDeeper-testLevel';
       observer.createObserverDictionary(state);
       observer.attach([deepKey], cb);
       observer.detach([deepKey], cb);
+
       expect(observer.observerDictionary.dummy.subscribers.length).toBe(0);
-      expect(observer.observerDictionary['dummy-testArray'].subscribers.length).toBe(0);
-      expect(observer.observerDictionary['dummy-testArray-testDeeper'].subscribers.length).toBe(0);
+      expect(observer.observerDictionary['dummy-testDeeper'].subscribers.length).toBe(0);
+      expect(observer.observerDictionary['dummy-testDeeper-testLevel'].subscribers.length).toBe(0);
     });
   });
 

@@ -12,6 +12,9 @@ const trader = (state = defaultState, action) => {
   case 'SET_TRADER_NAME':
     newState = state.setIn(['details', 'name'], action.name);
     return newState;
+  case 'SET_TRADER_STREET':
+    newState = state.setIn(['details', 'address', 'street'], action.street);
+    return newState;
   default:
     return state;
   }

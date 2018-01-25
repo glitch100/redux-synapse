@@ -1,5 +1,11 @@
 # Changelog
 
+### v0.4.x~
+> Release Date: 25/01/2018
+* Push old commits
+* Minor bug fix
+* Start of rejuvenation
+
 ### v0.3.0
 > Release Date: 25/03/2017
 * Removed old demo page in favour of slow buildout via webpack2

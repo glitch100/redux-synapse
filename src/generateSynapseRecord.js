@@ -68,6 +68,9 @@ export default function generateSynapseRecord(defaultState: any, stateKey: Strin
      * @returns {SynapseRecord} - Returns the updated SynapseRecord from the setIn operation
      */
     setIn(keys, value) {
+      if (!keys || keys.length === 0) {
+        throw new Error('Invalid or null keys provided to `setIn` method.')
+      }
       let desiredObject = this.get(keys[0]);
       if (!Iterable.isKeyed(desiredObject)) {
         throw new Error(`Attempted to deep update Keyed Iterable, when it wasn\'t.

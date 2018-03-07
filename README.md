@@ -5,7 +5,7 @@
 [![npm](https://img.shields.io/npm/dt/redux-synapse.svg)]() [![npm](https://img.shields.io/npm/v/redux-synapse.svg)]() [![npm](https://img.shields.io/npm/l/redux-synapse.svg)]()
 
 
-`redux-synapse` is a library that is heavily inspired by `react-redux` and acts as an alternative for the binding of react components to the store in a more explicit manner. The primary difference is the nature in which each component must declare explicity what updates should affect the component via its higher order component; a `synapse`. With `synapse`'s it is possible to achieve a higher level of performance, than you would with alternative libraries.
+`redux-synapse` is a library that is heavily inspired by `react-redux` and acts as an alternative for the binding of react components to the store in a more explicit manner. The primary difference is the nature in which each component must declare explicity what updates should affect the component via its higher order component; a `synapse`. With `synapse`'s there is potential to achieve a higher level of performance than a vanillar react-redux setup.
 
 A `synapse` is declared to listen to specific messages and act upon them. This is an early release of something that I intend to grow over time and build upon to make more efficient.
 
@@ -31,7 +31,7 @@ npm install --save redux-synapse
 `react` is a fantastic tool, however with larger trees you end up with an inefficient number of rerenders unless you are very strict with your `shouldComponentUpdates`, especially over frequently updated state in a standard flux model, or your own store implementation via `context`. As we know, `react-redux` utilises the `connect` higher order component to theoretically make your tree flat, so that updates are dished out directly from the store, and additional rerenders are only done if the state that we are interested in, handled via a `mapStateToProps` function, changes. This is fantastic as rerenders are expensive, and cutting them out can really solve a large number of performance problems. However in applications that are updating state frequently, such as a video based applcation, or a stock market tracker, you are going to lose performance before the rerenders even happens.
 
 In `react` performance would go down just based on the fact that all those components are rerendering so frequently.
-In `react-redux` although we shortcut the rerenders, we are still going to visit our `mapStateToProps` of most of our components, and in essence create a new object every single time to be returned and then evaluated upon. This is fine for smaller applications but in an application with 10's or 100's of components this is going to lead to performance problems.
+In a vanilla `react-redux` although we shortcut the rerenders, we are still going to visit our `mapStateToProps` of most of our components, and in essence create a new object every single time to be returned and then evaluated upon. This is fine for smaller applications but in an application with 10's or 100's of components this is going to lead to performance problems.
 
 ### The Solution
 
